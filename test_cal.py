@@ -1,45 +1,35 @@
 import pytest
-import yaml
-
-from pythoncode.calculator import Calculator
-
 
 
 class TestCalc:
 
-    # def get_data(self):
-    #     with open('/.calc.yml') as f:
-    #         datas = yaml.safe_load(f)
-    #         return datas
-    def setup(self):
-        print('\n开始计算')
-    # def setup_class(self):
-    #     print('\n开始计算')
-        self.calc = Calculator()
+    @pytest.mark.run(order=1)
+    def test_add(self, get_calc, get_add, beg_end):
+        r_add = None
+        try:
+            r_add = get_calc.add(get_add[0],get_add[1])
+            if isinstance(r_add,float):
+                r_add = round(r_add,2)
+        except Exception as f:
+            print(f)
+            assert r_add == get_add[2]
 
-    def teardown(self):
-        print('\n计算结束')
+    @pytest.mark.run(order=4)
+    def test_div(self, get_calc, get_div, beg_end):
+        try:
+            r_div = get_calc.div(get_div[0],get_div[1])
+            r_div = round(r_div,2)
+            assert r_div == get_div[2]
+        except ZeroDivisionError:
+            print('注意：除数不可为0')
 
-    # def teardown_class(self):
-    #     print('\n计算结束')
+    @pytest.mark.run(order=2)
+    def test_sub(self, get_calc, get_sub, beg_end):
+        r_sub = get_calc.sub(get_sub[0],get_sub[1])
+        assert r_sub == get_sub[2]
 
+    @pytest.mark.run(order=3)
+    def test_mul(self, get_calc, get_mul, beg_end):
+        r_mul = get_calc.mul(get_mul[0],get_mul[1])
+        assert r_mul == get_mul[2]
 
-    @pytest.mark.parametrize("a,b,expect", [(4, 4, 8), (-5, -5, -10), (2000, 2000, 4000)])
-    def test_add(self, a,b,expect):
-        result = self.calc.add(a,b)
-        assert result == expect
-
-    @pytest.mark.parametrize("a,b,expect", [(4, 2, 2), (-5, -5, 0), (2000, 2000, 0)])
-    def test_sub(self, a,b,expect):
-        result = self.calc.sub(a,b)
-        assert result == expect
-
-    @pytest.mark.parametrize("a,b,expect", [(4, 4, 16), (-5, -5, 25), (45, 3, 135)])
-    def test_mul(self, a,b,expect):
-        result = self.calc.mul(a,b)
-        assert result == expect
-
-    @pytest.mark.parametrize("a,b,expect", [(4, 4, 1), (-5, -5, 1), (2000, 500, 4)])
-    def test_div(self, a,b,expect):
-        result = self.calc.div(a,b)
-        assert result == expect
