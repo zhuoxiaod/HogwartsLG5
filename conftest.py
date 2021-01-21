@@ -20,7 +20,7 @@ def get_calc():
     calc =  Calculator()
     return calc
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='module')
 def beg_end():
     print('开始计算')
     yield
