@@ -38,5 +38,4 @@ class TestBaidu():
     #     self.driver.find_element(By.XPATH, "//*[@class='index_top_operation_loginBtn']").click()
     #     sleep(8)
 
-
         self.driver.close()
