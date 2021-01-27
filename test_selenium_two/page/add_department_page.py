@@ -8,11 +8,11 @@ from test_selenium_two.page.base_page import BasePage
 
 class Department(BasePage):
 
-    _dname = (By.XPATH, "dname")
+    _name = (By.XPATH, "name")
     def add_department(self, dname):
         self.find(By.XPATH, "//*[@class='member_colLeft_top_addBtn']").click()
         self.find(By.XPATH, "//*[@class='js_create_party']").click()
-        self.find(By.XPATH, "//*[@name='name']").send_keys(dname)
+        self.find(*self._name).send_keys(dname)
         self.find(By.XPATH, "//*[@class='js_parent_party_name']").click()
         self.find(By.CSS_SELECTOR, ".qui_dialog_body.ww_dialog_body [id='1688850701784008_anchor']").click()
         self.find(By.XPATH, "//*[@class='qui_btn ww_btn ww_btn_Blue']").click()
